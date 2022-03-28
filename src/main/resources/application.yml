@@ -1,0 +1,24 @@
+server:
+  port: 8070
+  servlet:
+    session:
+      timeout: 180m
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fond03
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        default_schema: public
+        dialect: org.hibernate.dialect.PostgreSQL11Dialect
+        show_sql: false
+        format_sql: true

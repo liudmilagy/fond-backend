@@ -63,10 +63,13 @@ public class ProductMainPageServiceImpl implements ProductMainPageService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Получение Map по продукту c Map по типу условий (с депозитом/без):
+     *
+     * @param productProvisions - все данные по продуктовой линейке с/без депозита
+     * @return Map<продукт, Map<код с депозитом/без депозита, provision>
+     */
     Map<ClsProduct, Map<String, RegProductProvision>> productProvisionsToMap(List<RegProductProvision> productProvisions) {
-        /**
-         * Map<продукт, Map<код с депозитом/без депозита, provision>
-         */
         Map<ClsProduct, Map<String, RegProductProvision>> productMap = new HashMap<>();
         productProvisions.forEach(productProvision -> {
             ClsProduct product = productProvision.getProduct();
@@ -82,7 +85,11 @@ public class ProductMainPageServiceImpl implements ProductMainPageService {
     }
 
     Map<ClsProduct, RegProductFile> getProductFileMap(Set<ClsProduct> products) {
-        Set<RegProductFile> productFiles = productFileRepo.findAllByProductIn(products);
+        Set<Long> productImageIds = products.stream()
+                                    .map(ClsProduct::getIdImgCover)
+                                    .filter(Objects::nonNull)
+                                    .collect(Collectors.toSet());
+        List<RegProductFile> productFiles = productFileRepo.findAllById(productImageIds);
         return productFiles.stream()
                 .collect(Collectors.toMap(RegProductFile::getProduct, regProductFile -> regProductFile));
     }

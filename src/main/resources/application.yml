@@ -19,6 +19,6 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
         default_schema: public
-        dialect: org.hibernate.dialect.PostgreSQL11Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         show_sql: false
         format_sql: true
